@@ -1,0 +1,30 @@
+{
+	"name": "pokemon-mern-collab",
+	"version": "1.0.0",
+	"description": "<!-- Pokemon full stack mern app",
+	"main": "app.js",
+	"scripts": {
+		"test": "jest",
+		"start": "nodemon app.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/philrussel21/pokemon-mern-collab.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/philrussel21/pokemon-mern-collab/issues"
+	},
+	"homepage": "https://github.com/philrussel21/pokemon-mern-collab#readme",
+	"dependencies": {
+		"express": "^4.17.1",
+		"mongoose": "^5.10.8"
+	},
+	"devDependencies": {
+		"jest": "^26.5.2",
+		"nodemon": "^2.0.4",
+		"supertest": "^5.0.0"
+	}
+}
