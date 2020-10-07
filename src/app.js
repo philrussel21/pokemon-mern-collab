@@ -17,7 +17,7 @@ app.use(express.json())
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.status(200).send('Hello World!')
 })
 
 app.use('/pokemons', pokeRoutes)
@@ -34,9 +34,14 @@ mongoose.connect(mongoDB, {
   else
     console.log('Connected to database!')
   // listen here because its successful
-  const server = app.listen(port, () => {
-    console.log('listening on port:' + port)
-  })
+  // const server = app.listen(port, () => {
+  //   console.log('listening on port:' + port)
+  // })
+})
+
+// had to be declared outside the code block above for testing export
+const server = app.listen(port, () => {
+  console.log('listening on port:' + port)
 })
 
 // //Set up default mongoose connection
@@ -48,3 +53,5 @@ mongoose.connect(mongoDB, {
 
 // //Bind connection to error event (to get notification of connection errors)
 // db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+module.exports = { app, server }
