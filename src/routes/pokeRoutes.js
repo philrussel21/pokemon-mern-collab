@@ -11,16 +11,16 @@ const {
 // Returns all Pokemons
 router.get('/', getPokemons)
 
-// Returns one Pokemon with given id
+// // Returns one Pokemon with given id
 router.get('/:id', getPokemon)
 
-// Adds a new Pokemon
-router.Pokemon('/', addPokemon)
+// // Adds a new Pokemon
+router.post('/', addPokemon)
 
-// Deletes a Pokemon with given id
+// // Deletes a Pokemon with given id
 router.delete('/:id', removePokemon)
 
-// Updates a Pokemon with given id
-router.patch('/:id', changePokemon)
+// // Updates a Pokemon with given id
+router.put('/:id', changePokemon)
 
-modules.exports = { router }
+module.exports = router

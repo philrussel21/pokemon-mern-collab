@@ -1,0 +1,20 @@
+GET http://localhost:3000/pokemons
+
+###
+
+POST http://localhost:3000/pokemons HTTP/1.1
+content-type: application/json
+
+# {
+#   "name": "bulbasaur",
+#   "pokeId": 1,
+#   "pokeImg": "url" 
+# }
+# {
+#   "name": "venasaur",   
+#   "id": 3,
+#   "sprites": {
+#       "front_default": "url"
+#       }
+# }
+

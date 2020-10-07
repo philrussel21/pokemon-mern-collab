@@ -2,10 +2,10 @@
 	"name": "pokemon-mern-collab",
 	"version": "1.0.0",
 	"description": "<!-- Pokemon full stack mern app",
-	"main": "app.js",
+	"main": "src/app.js",
 	"scripts": {
 		"test": "jest",
-		"start": "nodemon app.js"
+		"start": "nodemon"
 	},
 	"repository": {
 		"type": "git",

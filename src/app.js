@@ -1,28 +1,30 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
-const router = require('./routes/routes')
+const pokeRoutes = require('./routes/pokeRoutes')
 
 const port = process.env.PORT || 3000
+
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-// use means its a middle ware
-app.use((req, res, next) => {
-  console.log('Middle-ware running.')
-  next()
-})
+// // use means its a middle ware
+// app.use((req, res, next) => {
+//   console.log('Middle-ware running.')
+//   next()
+// })
 
-app.use('/', router)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-const dbConnection = 'mongodb://localhost:' + port + '/'
+app.use('/pokemons', pokeRoutes)
+
+const mongoDB = 'mongodb://localhost/pokemons'
 // Set three properties to avoid deprecation warnings:
-mongoose.connect(dbConnection, {
+mongoose.connect(mongoDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false
@@ -36,3 +38,13 @@ mongoose.connect(dbConnection, {
     console.log('listening on port:' + port)
   })
 })
+
+// //Set up default mongoose connection
+// var mongoDB = 'mongodb://127.0.0.1/my_database';
+// mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// //Get the default connection
+// var db = mongoose.connection;
+
+// //Bind connection to error event (to get notification of connection errors)
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));

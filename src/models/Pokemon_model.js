@@ -7,12 +7,12 @@ const Pokemon = new Schema({
     type: String,
     required: true,
   },
-  create_date: {
-    type: Date,
+  pokeId: {
+    type: Number,
     required: true
   },
-  modified_date: {
-    type: Date,
+  pokeImg: {
+    type: String,
     required: true
   }
 })

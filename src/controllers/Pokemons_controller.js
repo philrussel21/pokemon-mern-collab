@@ -1,24 +1,80 @@
+const { getAllPokemons,
+  getPokemonById,
+  addPokemonToDb,
+  deletePokemon,
+  updatePokemon } = require('../utils/Pokemon_utils');
 
 
+async function getPokemons(req, res) {
+  try {
 
-function getPokemons(req, res) {
+    const pokemons = await getAllPokemons()
 
+    // TODO - rendering
+    res.status(200).send(pokemons)
+  } catch (error) {
+    res.status(500).send({
+      error
+    })
+  }
 }
 
-function getPokemon(req, res) {
-
+async function getPokemon(req, res) {
+  try {
+    const pokemon = await getPokemonById(req)
+    // TODO - rendering
+    if (pokemon.length == 0) {
+      res.status(404).send({
+        message: "Pokemon not found"
+      })
+    } else {
+      res.status(200).send(pokemon)
+    }
+  } catch (error) {
+    res.status(500).send({
+      error
+    })
+  }
 }
 
-function addPokemon(req, res) {
+async function addPokemon(req, res) {
+  try {
+    const newPokemon = await addPokemonToDb(req).save()
 
+    // TODO - rendering
+    res.status(201).send(newPokemon)
+
+  } catch (error) {
+    res.status(500).send({
+      error
+    })
+  }
 }
 
-function removePokemon(req, res) {
+async function removePokemon(req, res) {
 
+  try {
+    const response = await deletePokemon(req)
+    res.status(204).send({
+      message: "Pokemon Deleted"
+    })
+
+  } catch (error) {
+    res.status(500).send({
+      error
+    })
+  }
 }
 
-function changePokemon(req, res) {
-
+async function changePokemon(req, res) {
+  try {
+    const pokemon = await updatePokemon(req)
+    res.status(200).send(pokemon)
+  } catch (error) {
+    res.status(500).send({
+      error
+    })
+  }
 }
 
 module.exports = {
