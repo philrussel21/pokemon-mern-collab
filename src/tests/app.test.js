@@ -50,3 +50,26 @@ describe('App Homepage', () => {
   });
 });
 
+describe('Add Pokemon to Database', () => {
+  it('should add a new pokemon to the database', async (done) => {
+    const data = {
+      name: 'pikachu',
+      id: 99,
+      sprites: {
+        front_default: 'testurl.com'
+      }
+    }
+    const expected = {
+      name: 'pikachu',
+      pokeId: 99,
+      pokeImg: 'testurl.com'
+    }
+    const res = await request
+      .post('/pokemons')
+      .send(data)
+
+    expect(res.status).toBe(201)
+    expect(res.body).toEqual(expect.objectContaining(expected))
+    done()
+  });
+});
