@@ -19,7 +19,15 @@ beforeAll(async (done) => {
   });
 
   // seeds the database with starting pokemons
-  seedData(testData)
+  for (let i = 0; i < testData.length; i++) {
+    const pokemon = testData[i]
+    const defaultPokemon = new Pokemon(pokemon)
+    await defaultPokemon.save(err => {
+      if (err) {
+        console.error(err)
+      }
+    })
+  }
 
   done()
 })
@@ -30,11 +38,10 @@ beforeAll(async (done) => {
 // "afterAll" is a magic built-in Jest function that will run when
 // all tests & test suites have finished running.
 afterAll(async (done) => {
-  // deletes the collection pokemons from the test database
-  // mongoose.connection.dropCollection('pokemons')
+
 
   // Force our server reference to close:
-  await server.close();
+  server.close();
 
   // Dumb hack to trick Jest into waiting a bit more before 
   // it freaks out over processes hanging open. 
@@ -43,8 +50,14 @@ afterAll(async (done) => {
   // for several years & solutions are vague.
   await new Promise(resolve => setTimeout(() => resolve(), 500));
 
+  // deletes the collection pokemons from the test database
+  // TODO - uncomment below to clear collection after all tests
+  // await Pokemon.deleteMany({})
+
   // closes the test database collection after all tests
-  mongoose.connection.close()
+  await mongoose.connection.close()
+
+
   // Resolve the done() callback? Again not sure, as solutions are vague.
   done();
 })
@@ -54,6 +67,27 @@ describe('App Homepage', () => {
     const res = await request.get('/')
     expect(res.status).toBe(200)
 
+    done()
+  });
+});
+
+describe('Pokemon Index ', () => {
+
+  it('should exist', async (done) => {
+    const res = await request.get('/pokemons')
+    expect(res.status).toBe(200)
+    done()
+  })
+
+  it('should have all the default test data', async (done) => {
+    const res = await request.get('/pokemons')
+    const testPokeNames = ['bulbasaur', 'squirtle', 'charmander']
+    const resPokeNames = []
+    for (let i = 0; i < res.body.length; i++) {
+      const pokemon = res.body[i];
+      resPokeNames.push(pokemon.name)
+    }
+    expect(resPokeNames).toEqual(expect.arrayContaining(testPokeNames))
     done()
   });
 });
@@ -81,15 +115,3 @@ describe('Add Pokemon to Database', () => {
     done()
   });
 });
-
-function seedData(data) {
-  for (let i = 0; i < data.length; i++) {
-    const pokemon = data[i]
-    const defaultPokemon = new Pokemon(pokemon)
-    defaultPokemon.save(err => {
-      if (err) {
-        console.error(err)
-      }
-    })
-  }
-}
