@@ -3,7 +3,8 @@ const supertest = require('supertest');
 const mongoose = require('mongoose');
 const dbName = 'test'
 const request = supertest(app)
-const Pokemon = require('../models/Pokemon_model');
+const Pokemon = require('../models/Pokemon_model')
+const testData = require('./testData.json');
 
 beforeAll(async (done) => {
   //closes the dev database collection before all the tests
@@ -17,6 +18,9 @@ beforeAll(async (done) => {
     useFindAndModify: false
   });
 
+  // seeds the database with starting pokemons
+  seedData(testData)
+
   done()
 })
 
@@ -27,7 +31,7 @@ beforeAll(async (done) => {
 // all tests & test suites have finished running.
 afterAll(async (done) => {
   // deletes the collection pokemons from the test database
-  mongoose.connection.dropCollection('pokemons')
+  // mongoose.connection.dropCollection('pokemons')
 
   // Force our server reference to close:
   await server.close();
@@ -77,3 +81,15 @@ describe('Add Pokemon to Database', () => {
     done()
   });
 });
+
+function seedData(data) {
+  for (let i = 0; i < data.length; i++) {
+    const pokemon = data[i]
+    const defaultPokemon = new Pokemon(pokemon)
+    defaultPokemon.save(err => {
+      if (err) {
+        console.error(err)
+      }
+    })
+  }
+}

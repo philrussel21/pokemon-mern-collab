@@ -1,0 +1,17 @@
+[
+	{
+		"name": "bulbasaur",
+		"pokeId": 1,
+		"pokeImg": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
+	},
+	{
+		"name": "squirtle",
+		"pokeId": 7,
+		"pokeImg": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
+	},
+	{
+		"name": "charmander",
+		"pokeId": 4,
+		"pokeImg": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"
+	}
+]
