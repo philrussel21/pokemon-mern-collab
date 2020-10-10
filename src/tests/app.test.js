@@ -52,7 +52,7 @@ afterAll(async (done) => {
 
   // deletes the collection pokemons from the test database
   // TODO - uncomment below to clear collection after all tests
-  // await Pokemon.deleteMany({})
+  await Pokemon.deleteMany({})
 
   // closes the test database collection after all tests
   await mongoose.connection.close()
@@ -62,6 +62,8 @@ afterAll(async (done) => {
   done();
 })
 
+// HOMEPAGE
+
 describe('App Homepage', () => {
   it('should exist', async (done) => {
     const res = await request.get('/')
@@ -70,6 +72,8 @@ describe('App Homepage', () => {
     done()
   });
 });
+
+// POKEMON INDEX ROUTE
 
 describe('Pokemon Index ', () => {
 
@@ -91,6 +95,40 @@ describe('Pokemon Index ', () => {
     done()
   });
 });
+
+// SHOW POKEMON ROUTE
+
+describe('Show Pokemon', () => {
+  const pokeId = 1
+
+  it('should exist', async (done) => {
+    const res = await request.get(`/pokemons/${pokeId}`)
+    expect(res.status).toBe(200)
+    done()
+  });
+
+  it('should find certain pokemon based on ID', async (done) => {
+    const res = await request.get(`/pokemons/${pokeId}`)
+    const expectedPokeName = 'bulbasaur'
+    expect(res.body[0].name).toBe(expectedPokeName)
+    done()
+  });
+
+  it('should return status 404 when no pokemon found based on ID', async (done) => {
+    const res = await request.get('/pokemons/42069')
+    expect(res.status).toBe(404)
+    done()
+  });
+
+  it('should return status 500 when invalid pokemon ID is provided', async (done) => {
+    const res = await request.get('/pokemons/69nice69')
+    expect(res.status).toBe(500)
+    done()
+  });
+});
+
+
+// ADD POKEMON ROUTE
 
 describe('Add Pokemon to Database', () => {
   it('should add a new pokemon to the database', async (done) => {
@@ -115,3 +153,5 @@ describe('Add Pokemon to Database', () => {
     done()
   });
 });
+
+// INVALID ROUTE
