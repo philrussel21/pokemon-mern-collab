@@ -3,6 +3,7 @@ const supertest = require('supertest');
 const mongoose = require('mongoose');
 const dbName = 'test'
 const request = supertest(app)
+const Pokemon = require('../models/Pokemon_model');
 
 beforeAll(async (done) => {
   //closes the dev database collection before all the tests
@@ -25,6 +26,9 @@ beforeAll(async (done) => {
 // "afterAll" is a magic built-in Jest function that will run when
 // all tests & test suites have finished running.
 afterAll(async (done) => {
+  // deletes the collection pokemons from the test database
+  mongoose.connection.dropCollection('pokemons')
+
   // Force our server reference to close:
   await server.close();
 
@@ -52,7 +56,7 @@ describe('App Homepage', () => {
 
 describe('Add Pokemon to Database', () => {
   it('should add a new pokemon to the database', async (done) => {
-    const data = {
+    const input = {
       name: 'pikachu',
       id: 99,
       sprites: {
@@ -66,7 +70,7 @@ describe('Add Pokemon to Database', () => {
     }
     const res = await request
       .post('/pokemons')
-      .send(data)
+      .send(input)
 
     expect(res.status).toBe(201)
     expect(res.body).toEqual(expect.objectContaining(expected))
