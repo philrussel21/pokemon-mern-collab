@@ -120,9 +120,9 @@ describe('Show Pokemon', () => {
     done()
   });
 
-  it('should return status 500 when invalid pokemon ID is provided', async (done) => {
+  it('should return status 404 when invalid pokemon ID is provided to pokemon route', async (done) => {
     const res = await request.get('/pokemons/69nice69')
-    expect(res.status).toBe(500)
+    expect(res.status).toBe(404)
     done()
   });
 });
@@ -155,3 +155,11 @@ describe('Add Pokemon to Database', () => {
 });
 
 // INVALID ROUTE
+
+describe('Invalid Route', () => {
+  it('should return status 404 when invalid routes was given from root', async (done) => {
+    const res = await request.get('/someInvalidRoute')
+    expect(res.status).toBe(404)
+    done()
+  });
+});
