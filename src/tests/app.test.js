@@ -73,6 +73,22 @@ describe('App Homepage', () => {
   });
 });
 
+// INVALID ROUTE
+
+describe('Invalid Route', () => {
+  it('should return status 404 when invalid routes was given from root test 1', async (done) => {
+    const res = await request.get('/someInvalidRoute')
+    expect(res.status).toBe(404)
+    done()
+  });
+
+  it('should return status 404 when invalid routes was given from root test 2', async (done) => {
+    const res = await request.get('/anotherInvalidRoute')
+    expect(res.status).toBe(404)
+    done()
+  });
+});
+
 // POKEMON INDEX ROUTE
 
 describe('Pokemon Index ', () => {
@@ -154,12 +170,22 @@ describe('Add Pokemon to Database', () => {
   });
 });
 
-// INVALID ROUTE
+// UPDATE POKEMON ROUTE
 
-describe('Invalid Route', () => {
-  it('should return status 404 when invalid routes was given from root', async (done) => {
-    const res = await request.get('/someInvalidRoute')
-    expect(res.status).toBe(404)
+describe('Update Pokemon', () => {
+  it('should update pokemon based on given data', async (done) => {
+    const pokeId = 1
+    const updatedData = {
+      name: 'CHARMANDER',
+      pokeId: 4,
+      pokeImg: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png'
+    }
+    const res = await request
+      .put(`/pokemons/${pokeId}`)
+      .send(updatedData)
+
+    expect(res.status).toBe(200)
+    expect(res.body).toEqual(expect.objectContaining(updatedData))
     done()
   });
 });
