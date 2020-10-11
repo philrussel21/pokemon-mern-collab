@@ -5,23 +5,6 @@ const pokeRoutes = require('./routes/pokeRoutes')
 
 const port = process.env.PORT || 3000
 
-
-app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
-
-// // use means its a middle ware
-// app.use((req, res, next) => {
-//   console.log('Middle-ware running.')
-//   next()
-// })
-
-
-app.get('/', (req, res) => {
-  res.status(200).send('Hello World!')
-})
-
-app.use('/pokemons', pokeRoutes)
-
 const mongoDB = 'mongodb://localhost/pokemons'
 // Set three properties to avoid deprecation warnings:
 mongoose.connect(mongoDB, {
@@ -42,6 +25,28 @@ mongoose.connect(mongoDB, {
 // had to be declared outside the code block above for testing export
 const server = app.listen(port, () => {
   console.log('listening on port:' + port)
+})
+
+app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
+
+// // use means its a middle ware
+// app.use((req, res, next) => {
+//   console.log('Middle-ware running.')
+//   next()
+// })
+
+
+app.get('/', (req, res) => {
+  res.status(200).send('Hello World!')
+})
+
+app.use('/pokemons', pokeRoutes)
+
+app.use((req, res) => {
+  res.status(404).send({
+    message: "ERROR: Page not found"
+  })
 })
 
 // //Set up default mongoose connection

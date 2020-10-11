@@ -31,8 +31,8 @@ async function getPokemon(req, res) {
       res.status(200).send(pokemon)
     }
   } catch (error) {
-    res.status(500).send({
-      error
+    res.status(404).send({
+      message: "ERROR: Page not found"
     })
   }
 }
