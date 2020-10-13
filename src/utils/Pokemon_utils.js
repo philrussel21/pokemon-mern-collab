@@ -10,14 +10,7 @@ function getPokemonById(req) {
 }
 
 function addPokemonToDb(req) {
-  const pokeData = req.body
-
-  const newPokemon = {}
-  newPokemon.name = pokeData.name
-  newPokemon.pokeId = pokeData.id
-  newPokemon.pokeImg = pokeData.sprites.front_default
-
-  return new Pokemon(newPokemon)
+  return new Pokemon(req.body)
 }
 
 function deletePokemon(req) {
