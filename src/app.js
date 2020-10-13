@@ -1,10 +1,13 @@
 const express = require('express')
+// REMOVE WHEN DOING WITH REACT
+const path = require('path');
+const exphbs = require('express-handlebars');
 const app = express()
 const mongoose = require('mongoose')
 const pokeRoutes = require('./routes/pokeRoutes')
 
 const port = process.env.PORT || 3000
-
+// change here for when deployed
 const mongoDB = 'mongodb://localhost/pokemons'
 // Set three properties to avoid deprecation warnings:
 mongoose.connect(mongoDB, {
@@ -22,10 +25,17 @@ mongoose.connect(mongoDB, {
   // })
 })
 
+// REMOVE FOR REACT
+app.set('views', (__dirname + '/views'));
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
+
 // had to be declared outside the code block above for testing export
 const server = app.listen(port, () => {
   console.log('listening on port:' + port)
 })
+
+
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
@@ -37,16 +47,19 @@ app.use(express.json())
 // })
 
 
+
+
 app.get('/', (req, res) => {
-  res.status(200).send('Hello World!')
+  res.status(200).render('home')
 })
 
 app.use('/pokemons', pokeRoutes)
 
 app.use((req, res) => {
-  res.status(404).send({
-    message: "ERROR: Page not found"
-  })
+  // res.status(404).send({
+  //   message: "ERROR: Page not found"
+  // })
+  res.status(404).render('404')
 })
 
 // //Set up default mongoose connection

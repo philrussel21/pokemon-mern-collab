@@ -10,8 +10,8 @@ async function getPokemons(req, res) {
 
     const pokemons = await getAllPokemons()
 
-    // TODO - rendering
-    res.status(200).send(pokemons)
+    // res.status(200).send(pokemons)
+    res.status(200).render('pokemons/index', { pokemons })
   } catch (error) {
     res.status(500).send({
       error

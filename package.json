@@ -20,6 +20,7 @@
 	"homepage": "https://github.com/philrussel21/pokemon-mern-collab#readme",
 	"dependencies": {
 		"express": "^4.17.1",
+		"express-handlebars": "^5.1.0",
 		"mongoose": "^5.10.8"
 	},
 	"devDependencies": {
