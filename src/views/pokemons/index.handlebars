@@ -1,11 +1,23 @@
 <h1>Pokemons here</h1>
-{{pokemons}}
+<div id="teamCont">
+  {{#if pokemons}}
+    <h2>Your PokeTeam!</h2>
+    {{#each pokemons}}
+      <h3>{{this.name}}</h3>
+      <p>{{this.id}}</p>
+      <img src="{{this.img}}" alt="Pokemon image of {{this.name}}">
+    {{/each}}
+  {{else}}
+    <h2>You have no pokemons at the moment. Try and catch some!</h2>
+  {{/if}}
+</div>
 
 <button id="getPoke">Generate Pokemons</button>
 <div id="pokeCont">
 
 </div>
 <script>
+const teamCont = document.querySelector('#teamCont')
 const pokeCont = document.querySelector('#pokeCont')
 const getPoke = document.querySelector('#getPoke')
 
@@ -51,15 +63,24 @@ function addPokemon(e) {
   const pokeId = p.textContent
   const pokeImg = img.src
 
+  // sends the chosen pokemon data to add to the database
   axios.post('/pokemons', {
     name, pokeId, pokeImg
   })
   .then(res => {
     console.log(res)
+
+    // redirects to given route after successfully adding the new pokemon in the database
+    // window.location = '/pokemons/'
+    window.location = res.data.redirectUrl
   })
   .catch(err => {
     console.log(err)
   })
+
+  // removes the pokemon div from the pokeCont then adds to teamCont
+  pokeCont.remove(pokeDiv)
+  teamCont.append(pokeDiv)
 }
 
 </script>

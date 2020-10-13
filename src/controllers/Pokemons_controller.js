@@ -8,8 +8,14 @@ const { getAllPokemons,
 async function getPokemons(req, res) {
   try {
 
-    const pokemons = await getAllPokemons()
-
+    const allPokemons = await getAllPokemons()
+    const pokemons = allPokemons.map(poke => {
+      const pokeDeets = {}
+      pokeDeets.name = poke.name
+      pokeDeets.id = poke.pokeId
+      pokeDeets.img = poke.pokeImg
+      return pokeDeets
+    })
     // res.status(200).send(pokemons)
     res.status(200).render('pokemons/index', { pokemons })
   } catch (error) {
@@ -40,9 +46,10 @@ async function getPokemon(req, res) {
 async function addPokemon(req, res) {
   try {
     const newPokemon = await addPokemonToDb(req).save()
-
     // TODO - rendering
-    res.status(201).send(newPokemon)
+    res.status(201).send({ newPokemon, redirectUrl: '/pokemons/' })
+    // res.status(201).redirect('/pokemons/')
+
 
   } catch (error) {
     res.status(500).send({
