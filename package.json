@@ -5,7 +5,8 @@
 	"main": "src/app.js",
 	"scripts": {
 		"test": "jest",
-		"start": "nodemon"
+		"start": "nodemon",
+		"build": "npx tailwindcss build ./src/public/stylesheets/source.css -o ./src/public/stylesheets/styles.css"
 	},
 	"repository": {
 		"type": "git",
@@ -21,7 +22,8 @@
 	"dependencies": {
 		"express": "^4.17.1",
 		"express-handlebars": "^5.1.0",
-		"mongoose": "^5.10.8"
+		"mongoose": "^5.10.8",
+		"tailwind": "^4.0.0"
 	},
 	"devDependencies": {
 		"jest": "^26.5.2",
