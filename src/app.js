@@ -25,26 +25,24 @@ mongoose.connect(mongoDB, {
   // })
 })
 
-// REMOVE FOR REACT
-app.set('views', (__dirname + '/views'));
-app.engine('handlebars', exphbs());
-app.set('view engine', 'handlebars');
 
 // had to be declared outside the code block above for testing export
 const server = app.listen(port, () => {
   console.log('listening on port:' + port)
 })
 
+// accessing public directory that has styelsheets and scripts
+app.use(express.static('src/public'))
+
+// REMOVE FOR REACT
+app.set('views', (__dirname + '/views'));
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
+
 
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-
-// // use means its a middle ware
-// app.use((req, res, next) => {
-//   console.log('Middle-ware running.')
-//   next()
-// })
 
 
 
