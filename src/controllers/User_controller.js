@@ -8,7 +8,7 @@ async function addUser(req, res) {
   try {
     const newUser = await User.create(req.body)
     console.log(newUser)
-    res.send('ADDED')
+    res.redirect('/')
   } catch (error) {
     console.log(error)
   }
@@ -16,17 +16,11 @@ async function addUser(req, res) {
 }
 
 function getLogin(req, res) {
-  res.render('users/login')
-}
-
-function addLogin(req, res) {
-  console.log(req.body)
-  res.send('LOGGED')
+  res.render('users/login', { error: req.flash('error') })
 }
 
 module.exports = {
   getRegister,
   addUser,
-  getLogin,
-  addLogin
+  getLogin
 }

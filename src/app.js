@@ -1,9 +1,23 @@
+// if on dev environment, extracts info from the env file
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const express = require('express')
 // REMOVE WHEN DOING WITH REACT
 const path = require('path');
 const exphbs = require('express-handlebars');
-const app = express()
 const mongoose = require('mongoose')
+// Passport components
+const flash = require('express-flash');
+const session = require('express-session')
+const passport = require('passport');
+const initPassport = require('./config/passport');
+
+const MongoStore = require('connect-mongo')(session)
+const app = express()
+
+
+
 
 // ROUTES
 const pokeRoutes = require('./routes/pokeRoutes')
@@ -12,6 +26,7 @@ const userRoutes = require('./routes/userRoutes')
 const port = process.env.PORT || 3000
 // change here for when deployed
 const mongoDB = 'mongodb://localhost/pokemons'
+
 // Set three properties to avoid deprecation warnings:
 mongoose.connect(mongoDB, {
   useNewUrlParser: true,
@@ -48,11 +63,22 @@ app.set('view engine', 'handlebars');
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-
-
+// AUTH and PASSPORT COMPONENTS HERE
+// Passport Component from config file
+initPassport(passport)
+app.use(session({
+  secret: process.env.SECRET_SESSION,
+  resave: false,
+  saveUninitialized: true,
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  cookie: { expires: 600000 }
+}))
+app.use(flash())
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.get('/', (req, res) => {
-  res.status(200).render('home')
+  res.status(200).render('home', { user: req.user })
 })
 
 app.use('/pokemons', pokeRoutes)
