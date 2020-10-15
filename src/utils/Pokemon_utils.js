@@ -1,4 +1,5 @@
 const Pokemon = require('../models/Pokemon_model');
+const axios = require('axios');
 
 function getAllPokemons() {
   return Pokemon.find()
@@ -26,9 +27,14 @@ function updatePokemon(req) {
   return Pokemon.findOneAndUpdate({ pokeId: pokeId }, updatedInfo, { new: true })
 }
 
+function getPokeData(pokeId) {
+  return axios.get(`https://pokeapi.co/api/v2/pokemon/${pokeId}`)
+}
+
 module.exports = {
   getAllPokemons,
   getPokemonById,
+  getPokeData,
   addPokemonToDb,
   deletePokemon,
   updatePokemon

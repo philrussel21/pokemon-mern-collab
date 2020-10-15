@@ -1,5 +1,6 @@
 const { getAllPokemons,
   getPokemonById,
+  getPokeData,
   addPokemonToDb,
   deletePokemon,
   updatePokemon } = require('../utils/Pokemon_utils');
@@ -27,17 +28,20 @@ async function getPokemons(req, res) {
 
 async function getPokemon(req, res) {
   try {
-    const pokemon = await getPokemonById(req)
+    let pokemonDb = await getPokemonById(req)
     // TODO - rendering
-    if (pokemon.length == 0) {
-      res.status(404).send({
+    if (pokemonDb.length == 0) {
+      res.status(404).render('pokemons/404poke', {
         message: "Pokemon not found"
       })
     } else {
-      res.status(200).send(pokemon)
+      const { data: pokemonAPI } = await getPokeData(pokemonDb[0].pokeId)
+      pokemonDb = pokemonDb.map(poke => poke.toJSON())
+      res.status(200).render('pokemons/show', { pokemonDb, pokemonAPI })
     }
   } catch (error) {
-    res.status(404).send({
+    console.log(error)
+    res.status(404).render('pokemons/404poke', {
       message: "ERROR: Page not found"
     })
   }

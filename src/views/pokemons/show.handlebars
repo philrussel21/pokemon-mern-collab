@@ -1,0 +1,13 @@
+<h1>Show Pokemons</h1>
+{{#each pokemonDb}}
+<p>{{this.name}}</p>
+<p>{{this.pokeId}}</p>
+<img src="{{this.pokeImg}}" alt="An image of {{this.name}}">
+{{/each}}
+<h2>Pokemon API Deets start here</h2>
+{{!-- have access to all other pokemon details using the variable
+pokemonAPI. feel free to show what you would like --}}
+{{pokemonAPI.base_experience}}
+
+<script>
+</script>
