@@ -4,9 +4,15 @@ function getRegister(req, res) {
   res.render('users/register')
 }
 
-function addUser(req, res) {
-  console.log(req.body)
-  res.send('ADDED')
+async function addUser(req, res) {
+  try {
+    const newUser = await User.create(req.body)
+    console.log(newUser)
+    res.send('ADDED')
+  } catch (error) {
+    console.log(error)
+  }
+
 }
 
 function getLogin(req, res) {

@@ -9,7 +9,7 @@ const { getRegister,
 router.get('/', getLogin)
 
 // add log in
-router.post('/login', addLogin)
+router.post('/', addLogin)
 
 // register page
 router.get('/register', getRegister)

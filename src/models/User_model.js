@@ -13,8 +13,10 @@ const User = new Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    bcrypt: true
   }
 })
-
+// encrypts the password
+User.plugin(require('mongoose-bcrypt'));
 module.exports = mongoose.model('User', User)
