@@ -4,7 +4,10 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const app = express()
 const mongoose = require('mongoose')
+
+// ROUTES
 const pokeRoutes = require('./routes/pokeRoutes')
+const userRoutes = require('./routes/userRoutes')
 
 const port = process.env.PORT || 3000
 // change here for when deployed
@@ -35,6 +38,7 @@ const server = app.listen(port, () => {
 app.use(express.static('src/public'))
 
 // REMOVE FOR REACT
+// fix for rendering issues due to code being in the src dir
 app.set('views', (__dirname + '/views'));
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
@@ -52,6 +56,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/pokemons', pokeRoutes)
+app.use('/users', userRoutes)
 
 app.use((req, res) => {
   // res.status(404).send({
