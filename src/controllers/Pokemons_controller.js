@@ -8,16 +8,7 @@ const { getAllPokemons,
 
 async function getPokemons(req, res) {
   try {
-
-    const allPokemons = await getAllPokemons()
-    const pokemons = allPokemons.map(poke => {
-      const pokeDeets = {}
-      pokeDeets.name = poke.name
-      pokeDeets.id = poke.pokeId
-      pokeDeets.img = poke.pokeImg
-      return pokeDeets
-    })
-    // res.status(200).send(pokemons)
+    const pokemons = await getAllPokemons()
     res.status(200).render('pokemons/index', { pokemons })
   } catch (error) {
     res.status(500).send({
@@ -36,7 +27,6 @@ async function getPokemon(req, res) {
       })
     } else {
       const { data: pokemonAPI } = await getPokeData(pokemonDb[0].pokeId)
-      pokemonDb = pokemonDb.map(poke => poke.toJSON())
       res.status(200).render('pokemons/show', { pokemonDb, pokemonAPI })
     }
   } catch (error) {

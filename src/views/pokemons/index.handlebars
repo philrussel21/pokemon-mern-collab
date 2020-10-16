@@ -4,8 +4,8 @@
     <h2>Your PokeTeam!</h2>
     {{#each pokemons}}
       <h3>{{this.name}}</h3>
-      <p>{{this.id}}</p>
-      <img src="{{this.img}}" alt="Pokemon image of {{this.name}}">
+      <p>{{this.pokeId}}</p>
+      <img src="{{this.pokeImg}}" alt="Pokemon image of {{this.name}}">
     {{/each}}
   {{else}}
     <h2>You have no pokemons at the moment. Try and catch some!</h2>
