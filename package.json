@@ -20,6 +20,7 @@
 	},
 	"homepage": "https://github.com/philrussel21/pokemon-mern-collab#readme",
 	"dependencies": {
+		"@handlebars/allow-prototype-access": "^1.0.3",
 		"axios": "^0.20.0",
 		"connect-mongo": "^3.2.0",
 		"dotenv": "^8.2.0",
@@ -27,6 +28,7 @@
 		"express-flash": "0.0.2",
 		"express-handlebars": "^5.1.0",
 		"express-session": "^1.17.1",
+		"handlebars": "^4.7.6",
 		"mongoose": "^5.10.8",
 		"mongoose-bcrypt": "^1.9.0",
 		"passport": "^0.4.1",

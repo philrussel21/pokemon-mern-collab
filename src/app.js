@@ -6,6 +6,8 @@ const express = require('express')
 // REMOVE WHEN DOING WITH REACT
 const path = require('path');
 const exphbs = require('express-handlebars');
+const Handlebars = require('handlebars')
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 const mongoose = require('mongoose')
 // Passport components
 const flash = require('express-flash');
@@ -55,7 +57,9 @@ app.use(express.static('src/public'))
 // REMOVE FOR REACT
 // fix for rendering issues due to code being in the src dir
 app.set('views', (__dirname + '/views'));
-app.engine('handlebars', exphbs());
+app.engine('handlebars', exphbs({
+  handlebars: allowInsecurePrototypeAccess(Handlebars)
+}));
 app.set('view engine', 'handlebars');
 
 
@@ -78,7 +82,12 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.get('/', (req, res) => {
-  res.status(200).render('home', { user: req.user })
+  res.status(200).render('home')
+})
+app.get('/dashboard', (req, res) => {
+  console.log(req.user)
+  const user = req.user
+  res.status(200).render('dashboard', { user })
 })
 
 app.use('/pokemons', pokeRoutes)

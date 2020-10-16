@@ -11,7 +11,7 @@ router.get('/login', getLogin)
 
 // add log in
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
+  successRedirect: '/dashboard',
   failureRedirect: '/users/login',
   // set to true first to figure out behaviour
   failureFlash: true
