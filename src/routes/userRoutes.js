@@ -13,10 +13,11 @@ const { checkNotAuthenticated, checkAuthenticated } = require('../middlewares/au
 router.get('/login', checkNotAuthenticated, getLogin)
 
 // add log in
+// uses passport 'local' strategy to authenticate
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/dashboard',
   failureRedirect: '/users/login',
-  // set to true first to figure out behaviour
+  // set to true to store the errors from the config to flash()
   failureFlash: true
 }))
 

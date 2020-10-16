@@ -14,6 +14,8 @@ const User = new Schema({
   password: {
     type: String,
     required: true,
+    // this would send it to mongoose-bcrypt which would then add
+    // methods to encrypt and decrpyt.
     bcrypt: true
   }
 })
