@@ -85,7 +85,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.get('/', (req, res) => {
-  res.status(200).render('home')
+  const message = req.flash('message') || null
+  res.status(200).render('home', { message })
 })
 app.get('/dashboard', checkAuthenticated, (req, res) => {
   console.log(req.user)

@@ -7,7 +7,7 @@ const { getRegister,
 } = require('../controllers/User_controller')
 
 // require middleware
-const { checkNotAuthenticated } = require('../middlewares/auth')
+const { checkNotAuthenticated, checkAuthenticated } = require('../middlewares/auth')
 
 // login page
 router.get('/login', checkNotAuthenticated, getLogin)
@@ -25,6 +25,13 @@ router.get('/register', checkNotAuthenticated, getRegister)
 
 // add new user
 router.post('/register', addUser)
+
+// logout
+router.get('/logout', checkAuthenticated, (req, res) => {
+  req.logout()
+  req.flash('message', "Successfully Logged out!")
+  res.redirect('/')
+})
 
 
 
