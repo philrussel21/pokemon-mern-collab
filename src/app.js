@@ -18,6 +18,9 @@ const initPassport = require('./config/passport');
 const MongoStore = require('connect-mongo')(session)
 const app = express()
 
+// require middlewares
+const { checkAuthenticated } = require('./middlewares/auth');
+
 
 
 
@@ -84,7 +87,7 @@ app.use(passport.session())
 app.get('/', (req, res) => {
   res.status(200).render('home')
 })
-app.get('/dashboard', (req, res) => {
+app.get('/dashboard', checkAuthenticated, (req, res) => {
   console.log(req.user)
   const user = req.user
   res.status(200).render('dashboard', { user })

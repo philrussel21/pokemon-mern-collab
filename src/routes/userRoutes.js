@@ -6,8 +6,11 @@ const { getRegister,
   getLogin,
 } = require('../controllers/User_controller')
 
+// require middleware
+const { checkNotAuthenticated } = require('../middlewares/auth')
+
 // login page
-router.get('/login', getLogin)
+router.get('/login', checkNotAuthenticated, getLogin)
 
 // add log in
 router.post('/login', passport.authenticate('local', {
@@ -18,7 +21,7 @@ router.post('/login', passport.authenticate('local', {
 }))
 
 // register page
-router.get('/register', getRegister)
+router.get('/register', checkNotAuthenticated, getRegister)
 
 // add new user
 router.post('/register', addUser)
