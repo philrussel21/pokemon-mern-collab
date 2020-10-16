@@ -17,7 +17,6 @@ async function addUser(req, res) {
     }
     else {
       const newUser = await User.create(req.body)
-      console.log(newUser)
       res.redirect('/')
     }
 
@@ -32,8 +31,23 @@ function getLogin(req, res) {
   res.render('users/login', { error })
 }
 
+async function getUserProfile(req, res) {
+  try {
+    const user = await User.findOne({ email: req.params.email })
+    if (!user) {
+      return res.render('404', { message: 'User not found' })
+    }
+    return res.render('users/profile', { user })
+  } catch (error) {
+    console.log(error)
+    return res.render('500')
+  }
+
+}
+
 module.exports = {
   getRegister,
   addUser,
-  getLogin
+  getLogin,
+  getUserProfile
 }

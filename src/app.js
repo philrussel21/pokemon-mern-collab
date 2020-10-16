@@ -92,7 +92,6 @@ app.get('/', (req, res) => {
   res.status(200).render('home', { message })
 })
 app.get('/dashboard', checkAuthenticated, (req, res) => {
-  console.log(req.user)
   const user = req.user
   res.status(200).render('dashboard', { user })
 })

@@ -4,6 +4,7 @@ const passport = require('passport')
 const { getRegister,
   addUser,
   getLogin,
+  getUserProfile
 } = require('../controllers/User_controller')
 
 // require middleware
@@ -34,6 +35,7 @@ router.get('/logout', checkAuthenticated, (req, res) => {
   res.redirect('/')
 })
 
+router.get('/:email', checkAuthenticated, getUserProfile)
 
 
 module.exports = router
