@@ -1,12 +1,18 @@
 <h1>Welcome to our homepage!</h1>
-{{#if user}}
-{{user}}
-{{/if}}
 {{#if message}}
 {{message}}
 {{/if}}
 <button id="btn">Clicked!</button>
 <a href="/users/login">Users</a>
+
+<br>
+Partials down here
+<br>
+{{!-- handlebars when came across this would look in the partials directory
+inside views for the file named flash --}}
+{{!-- this partial below would also have access to the variables
+passed on to this specific file --}}
+{{> flash}}
  <script>
    const btn = document.querySelector('#btn')
    btn.addEventListener('click', () => {

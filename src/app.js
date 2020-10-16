@@ -84,6 +84,9 @@ app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 
+
+// Routes
+
 app.get('/', (req, res) => {
   const message = req.flash('message') || null
   res.status(200).render('home', { message })
